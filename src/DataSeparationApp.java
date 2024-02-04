@@ -19,6 +19,9 @@ public class DataSeparationApp {
 		Student[] professorA = new Student[masterFileSize];
 
 		readDataFromFile(professorC, professorS, professorA);
+		
+		System.out.println("Main: " + professorC.length);
+		System.out.println("Main name: " + professorC[1].getStudentName());
 	}
 
 	private static void readDataFromFile(Student[] professorC, Student[] professorS, Student[] professorA) {
@@ -80,9 +83,13 @@ public class DataSeparationApp {
 		professorS = cleanArray(professorS, s);
 		professorA = cleanArray(professorA, a);
 
+		//Sorting 3 arrays
 		Arrays.sort(professorC);
 		Arrays.sort(professorS);
 		Arrays.sort(professorA);
+		
+		System.out.println("methood: " + professorC.length);
+		System.out.println("methood name: " + professorC[1].getStudentName());
 
 		writeToFile(professorC, "course1.csv");
 		writeToFile(professorS, "course2.csv");
