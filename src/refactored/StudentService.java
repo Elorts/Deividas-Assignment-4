@@ -25,7 +25,6 @@ public class StudentService {
         }
 
         return courseStudents;
-
     }
 
 
