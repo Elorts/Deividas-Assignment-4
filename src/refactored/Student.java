@@ -1,7 +1,5 @@
 package refactored;
 
-import java.io.Serializable;
-
 public class Student implements Comparable<Student> {
     private Integer studentId;
     private String studentName;
