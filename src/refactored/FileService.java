@@ -7,8 +7,8 @@ import java.nio.file.Paths;
 public class FileService {
 
     public Student[] readDataFromFile() {
-
         Integer masterFileSize = 0;
+
         try {
             masterFileSize = (int) Files.lines(Paths.get("student-master-list.csv")).count();
         } catch (IOException e) {
