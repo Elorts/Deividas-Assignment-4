@@ -14,6 +14,5 @@ public class StudentReportService {
         Student[] courseStudents = studentService.filterStudentByCourse(courseKey);
 
         fileService.writeStudentsFromFile(courseStudents, reportFilename);
-        
     }
 }
