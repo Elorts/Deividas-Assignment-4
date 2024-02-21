@@ -4,34 +4,28 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Arrays;
 
 public class DataSeparationApp {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 
-//		ArrayList<Student> professorC = new ArrayList<Student>();
-//		ArrayList<Student> professorS = new ArrayList<Student>();
-//		ArrayList<Student> professorA = new ArrayList<Student>();
+		Integer masterFileSize = (int) Files.lines(Paths.get("student-master-list.csv")).count();
 
-		
-		
+		Student[] professorC = new Student[masterFileSize];
+		Student[] professorS = new Student[masterFileSize];
+		Student[] professorA = new Student[masterFileSize];
+
 		readDataFromFile(professorC, professorS, professorA);
-
-		Collections.sort(professorC);
-		writeToFile(professorC, "course1.csv");
-
-		Collections.sort(professorS);
-		writeToFile(professorS, "course2.csv");
-
-		Collections.sort(professorA);
-		writeToFile(professorA, "course3.csv");
-
 	}
 
-	private static void readDataFromFile(ArrayList<Student> professorC, ArrayList<Student> professorS,
-			ArrayList<Student> professorA) {
+	private static void readDataFromFile(Student[] professorC, Student[] professorS, Student[] professorA) {
+
+		Integer c = 0;
+		Integer s = 0;
+		Integer a = 0;
 		BufferedReader fileReader = null;
 
 		try {
@@ -51,12 +45,23 @@ public class DataSeparationApp {
 				student.setGrade(Integer.parseInt(splittedString[3]));
 
 				if (student.getCourse().startsWith("COMP")) {
-					professorC.add(student);
+
+					professorC[c] = student;
+					c++;
+
 				} else if (student.getCourse().startsWith("STAT")) {
-					professorS.add(student);
-				} else
-					professorA.add(student);
+
+					professorS[s] = student;
+					s++;
+
+				} else {
+
+					professorA[a] = student;
+					a++;
+
+				}
 			}
+
 		} catch (FileNotFoundException e) {
 			System.out.println("Oops, no file!");
 			e.printStackTrace();
@@ -70,20 +75,31 @@ public class DataSeparationApp {
 				e.printStackTrace();
 			}
 		}
+
+		professorC = cleanArray(professorC, c);
+		professorS = cleanArray(professorS, s);
+		professorA = cleanArray(professorA, a);
+
+		Arrays.sort(professorC);
+		Arrays.sort(professorS);
+		Arrays.sort(professorA);
+
+		writeToFile(professorC, "course1.csv");
+		writeToFile(professorS, "course2.csv");
+		writeToFile(professorA, "course3.csv");
 	}
 
-	private static void writeToFile(ArrayList<Student> professor, String outputFile) {
+	private static void writeToFile(Student[] professor, String outputFile) {
 		BufferedWriter fileWriter = null;
 
 		try {
 			fileWriter = new BufferedWriter(new FileWriter(outputFile));
-
 			fileWriter.write("Student ID,Student Name,Course,Grade\n");
-
-			for (Student s : professor) {
-				fileWriter.write(
-						s.getStudentId() + "," + s.getStudentName() + "," + s.getCourse() + "," + s.getGrade() + "\n");
+			for (int i = 0; i < (professor.length); i++) {
+				fileWriter.write(professor[i].getStudentId() + "," + professor[i].getStudentName() + ","
+						+ professor[i].getCourse() + "," + professor[i].getGrade() + "\n");
 			}
+
 		} catch (FileNotFoundException e) {
 			System.out.println("Oops, no file!");
 			e.printStackTrace();
@@ -98,6 +114,16 @@ public class DataSeparationApp {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	private static Student[] cleanArray(Student[] professor, Integer counter) {
+		Student[] tempArray = new Student[counter];
+
+		for (int i = 0; i < counter; i++) {
+			tempArray[i] = professor[i];
+		}
+		return tempArray;
+
 	}
 
 }
