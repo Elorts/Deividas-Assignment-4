@@ -11,5 +11,4 @@ public class Assignment4Application {
         reportService.generateCourseStudentsReport("APMTH", "course2-ref.csv");
         reportService.generateCourseStudentsReport("STAT", "course3-ref.csv");
     }
-    
 }
