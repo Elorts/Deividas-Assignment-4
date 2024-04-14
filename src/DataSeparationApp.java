@@ -11,10 +11,12 @@ public class DataSeparationApp {
 
 	public static void main(String[] args) {
 
-		ArrayList<Student> professorC = new ArrayList<Student>();
-		ArrayList<Student> professorS = new ArrayList<Student>();
-		ArrayList<Student> professorA = new ArrayList<Student>();
+//		ArrayList<Student> professorC = new ArrayList<Student>();
+//		ArrayList<Student> professorS = new ArrayList<Student>();
+//		ArrayList<Student> professorA = new ArrayList<Student>();
 
+		
+		
 		readDataFromFile(professorC, professorS, professorA);
 
 		Collections.sort(professorC);
